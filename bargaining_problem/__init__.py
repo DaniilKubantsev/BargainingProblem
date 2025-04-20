@@ -8,15 +8,13 @@ def u1(x: float, alpha: float):
     # res = np.pow(x, alpha)
     # if np.iscomplex(res): raise ValueError("Complex number")
     # return res
-    return np.power(x, alpha)
+    return np.round(np.power(x, alpha),2)
 
 def u2(x: float, a: float, beta: float):
     # res = np.pow((a - x), beta)
     # if np.iscomplex(res): raise ValueError("Complex number")
     # return res
-    return np.power((a - x), beta)
-
-
+    return np.round(np.power((a - x), beta),2)
 
 
 
@@ -33,8 +31,8 @@ def nash_arbitration(a, alpha, beta):
 
     try:
         solution = minimize_scalar(f, bounds=bounds, method='bounded')
-        x, y = float(solution.x), float(f(solution.x))
-        return x, y
+        x, y = round(float(solution.x), 2), round(float(f(solution.x)), 2)
+        return x
     except ValueError:
         return EXCEPTION_VALUE
     except TypeError:
@@ -53,8 +51,8 @@ def utilitarian(a, alpha, beta):
 
     try:
         solution = minimize_scalar(f, bounds=bounds, method='bounded')
-        x, y = float(solution.x), float(f(solution.x))
-        return x, y
+        x, y = round(float(solution.x), 2), round(float(f(solution.x)), 2)
+        return x
     except ValueError:
         return EXCEPTION_VALUE
     except TypeError:
@@ -74,8 +72,8 @@ def kalai_smorodinsky(a, alpha, beta):
     try:
         x_initial_guess = a / 2
         solution = fsolve(f, x_initial_guess)[0]
-        x, y = float(solution), float(f(solution))
-        return x, y
+        x, y = round(float(solution), 2), round(float(f(solution)), 2)
+        return x
     except ValueError:
         return EXCEPTION_VALUE
     except TypeError:
@@ -91,8 +89,8 @@ def egalitarian(a, alpha, beta):
     try:
         x_initial_guess = a / 2
         solution = fsolve(f, x_initial_guess)[0]
-        x, y = solution, f(solution)
-        return x, y
+        x, y = round(solution, 2), round(f(solution), 2)
+        return x
     except ValueError:
         return EXCEPTION_VALUE
     except TypeError:
